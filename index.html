@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar da Promoção - As melhores ofertas</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Poppins para um visual moderno e arredondado como na imagem) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#0056D2',      /* Azul do fundo da imagem */
+                            lightBlue: '#2D7FF9', /* Azul mais claro para degradê */
+                            orange: '#FF6B00',    /* Laranja da etiqueta e logo */
+                            yellow: '#FFC107',    /* Amarelo das estrelas */
+                            dark: '#0f172a'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados para complementar o Tailwind */
+        body {
+            overflow-x: hidden;
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at center, #2D7FF9 0%, #0056D2 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .logo-text-shadow {
+            text-shadow: 3px 3px 0px #003c96;
+        }
+
+        /* Efeito 3D nos botões */
+        .btn-3d {
+            transition: all 0.1s;
+            box-shadow: 0px 5px 0px 0px #c2410c; /* Laranja escuro */
+        }
+        .btn-3d:active {
+            transform: translateY(5px);
+            box-shadow: 0px 0px 0px 0px #c2410c;
+        }
+
+        /* Cores das marcas (simuladas) */
+        .brand-magalu { background: linear-gradient(135deg, #0086ff 0%, #00aaff 100%); }
+        .brand-amazon { background: linear-gradient(135deg, #232f3e 0%, #37475a 100%); }
+        .brand-shopee { background: linear-gradient(135deg, #ee4d2d 0%, #ff7337 100%); }
+        .brand-ali { background: linear-gradient(135deg, #ff4747 0%, #ff7878 100%); }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-brand-blue shadow-lg" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <div class="text-3xl font-black text-white italic tracking-tighter logo-text-shadow">
+                        <span class="text-brand-orange">Radar</span><span class="text-white">daPromoção</span>
+                        <i class="fa-solid fa-satellite-dish text-brand-yellow text-2xl ml-1"></i>
+                    </div>
+                </div>
+                
+                <!-- Menu Desktop -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-white hover:text-brand-yellow px-3 py-2 rounded-md text-sm font-medium transition">Início</a>
+                        <a href="#ofertas" class="text-white hover:text-brand-yellow px-3 py-2 rounded-md text-sm font-medium transition">Melhores Ofertas</a>
+                        <a href="#grupos" class="bg-white text-brand-blue hover:bg-brand-yellow hover:text-brand-blue px-5 py-2 rounded-full font-bold transition shadow-md">
+                            Entrar no Grupo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Menu Mobile Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-blue-700 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-brand-blue pb-4 px-2" id="mobile-menu">
+            <a href="#home" class="block text-white px-3 py-2 rounded-md text-base font-medium">Início</a>
+            <a href="#ofertas" class="block text-white px-3 py-2 rounded-md text-base font-medium">Ofertas</a>
+            <a href="#grupos" class="block text-brand-yellow px-3 py-2 rounded-md text-base font-bold">Entrar nos Grupos</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-28 pb-20 lg:pt-36 lg:pb-32 hero-bg overflow-hidden">
+        
+        <!-- Elementos decorativos (Estrelas/Foguete da imagem) -->
+        <div class="absolute top-32 left-10 text-brand-yellow animate-spin-slow opacity-80 hidden lg:block">
+            <i class="fas fa-star text-4xl"></i>
+        </div>
+        <div class="absolute bottom-20 right-10 text-brand-yellow animate-bounce-slow opacity-80 hidden lg:block">
+            <i class="fas fa-rocket text-6xl transform rotate-45 text-white/20"></i>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
+                
+                <!-- Texto Hero -->
+                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+                    <div class="inline-flex items-center text-white bg-white/20 rounded-full p-1 pr-4 sm:text-base lg:text-sm xl:text-base font-semibold mb-6 border border-white/30 backdrop-blur-sm">
+                        <span class="px-3 py-1 text-xs font-bold leading-5 uppercase tracking-wide bg-brand-orange rounded-full mr-3 text-white">Novo</span>
+                        Ofertas atualizadas agora mesmo!
+                    </div>
+                    <h1 class="text-4xl tracking-tight font-black text-white sm:text-5xl md:text-6xl lg:text-6xl">
+                        <span class="block text-shadow">As melhores</span>
+                        <span class="block text-brand-yellow text-shadow">promoções do dia</span>
+                        <span class="block text-shadow">em um só lugar!</span>
+                    </h1>
+                    <p class="mt-4 text-base text-blue-100 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                        Monitoramos Amazon, Magalu, Shopee, AliExpress e muito mais para você não perder tempo nem dinheiro.
+                    </p>
+                    <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+                        <a href="#ofertas" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full text-white bg-brand-orange hover:bg-orange-600 md:py-4 md:text-xl md:px-10 btn-3d">
+                            <i class="fas fa-shopping-cart mr-2"></i> Ver Ofertas
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual Hero (Simulando o carrinho com logos) -->
+                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+                    <div class="relative mx-auto w-full rounded-lg lg:max-w-md">
+                        <!-- Círculo de fundo -->
+                        <div class="absolute top-0 left-0 -ml-20 -mt-20 w-80 h-80 rounded-full bg-white opacity-10 blur-3xl"></div>
+                        
+                        <!-- Elementos Flutuantes (Simulando as apps no carrinho) -->
+                        <div class="relative w-full aspect-square max-w-sm mx-auto">
+                            <!-- Carrinho Base (Ilustrativo) -->
+                            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 z-0 opacity-90">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081840.png" alt="Carrinho 3D" class="w-full drop-shadow-2xl filter brightness-110 sepia-0 hue-rotate-190 saturate-200">
+                            </div>
+
+                            <!-- Cards Flutuantes -->
+                            <div class="absolute top-10 left-0 w-20 h-20 rounded-2xl brand-shopee flex items-center justify-center shadow-xl animate-float z-10 border-2 border-white/30">
+                                <span class="text-white font-bold text-xs">Shopee</span>
+                            </div>
+
+                            <div class="absolute top-0 right-10 w-24 h-24 rounded-2xl brand-magalu flex items-center justify-center shadow-xl animate-float-delayed z-20 border-2 border-white/30">
+                                <span class="text-white font-bold">Magalu</span>
+                            </div>
+
+                            <div class="absolute bottom-20 right-0 w-20 h-20 rounded-2xl brand-ali flex items-center justify-center shadow-xl animate-float z-10 border-2 border-white/30">
+                                <span class="text-white font-bold text-xs">AliExpress</span>
+                            </div>
+
+                            <div class="absolute top-20 left-1/2 transform -translate-x-1/2 w-28 h-28 rounded-2xl brand-amazon flex items-center justify-center shadow-2xl animate-float z-30 border-4 border-brand-orange">
+                                <i class="fab fa-amazon text-4xl text-white"></i>
+                            </div>
+
+                            <!-- Etiqueta de Oferta -->
+                            <div class="absolute bottom-10 -left-4 bg-brand-orange text-white px-4 py-2 rounded-lg transform -rotate-12 shadow-lg font-bold animate-pulse z-40 border border-white">
+                                <i class="fas fa-tag mr-1"></i> OFERTA
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onda de transição -->
+        <div class="absolute bottom-0 w-full leading-none z-10">
+            <svg class="block w-full h-12 sm:h-24 text-gray-50" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="currentColor" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Marcas Section -->
+    <div class="py-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500 text-sm font-semibold uppercase tracking-wider mb-6">Monitoramos as gigantes do varejo</p>
+            <div class="flex justify-center flex-wrap gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Logos placeholder (texto estilizado para não depender de img externa) -->
+                <span class="text-2xl font-bold text-gray-800 flex items-center"><i class="fab fa-amazon mr-2"></i> Amazon</span>
+                <span class="text-2xl font-bold text-blue-600 flex items-center">Magalu</span>
+                <span class="text-2xl font-bold text-orange-500 flex items-center">Shopee</span>
+                <span class="text-2xl font-bold text-yellow-500 flex items-center">MercadoLivre</span>
+                <span class="text-2xl font-bold text-red-500 flex items-center">AliExpress</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ofertas Section -->
+    <section id="ofertas" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-brand-blue sm:text-4xl">
+                    Destaques do Radar
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Selecionamos as ofertas com os maiores descontos reais do momento.
+                </p>
+            </div>
+
+            <!-- Grid de Produtos -->
+            <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                
+                <!-- Card Produto 1 -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden group border border-gray-100">
+                    <div class="relative h-48 bg-gray-200 overflow-hidden flex items-center justify-center">
+                        <div class="absolute top-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded">-40%</div>
+                        <i class="fas fa-mobile-alt text-6xl text-gray-400 group-hover:scale-110 transition duration-300"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-400 mb-1 uppercase font-semibold">Smartphone</div>
+                        <h3 class="text-lg font-bold text-gray-900 leading-tight mb-2">iPhone 14 128GB</h3>
+                        <div class="flex items-end gap-2 mb-4">
+                            <span class="text-gray-400 line-through text-sm">R$ 5.499</span>
+                            <span class="text-2xl font-black text-brand-blue">R$ 3.299</span>
+                        </div>
+                        <button class="w-full bg-brand-blue text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                            Pegar Oferta <i class="fas fa-external-link-alt text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Produto 2 -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden group border border-gray-100">
+                    <div class="relative h-48 bg-gray-200 overflow-hidden flex items-center justify-center">
+                         <div class="absolute top-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded">-25%</div>
+                        <i class="fas fa-laptop text-6xl text-gray-400 group-hover:scale-110 transition duration-300"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-400 mb-1 uppercase font-semibold">Notebook</div>
+                        <h3 class="text-lg font-bold text-gray-900 leading-tight mb-2">Notebook Gamer Acer</h3>
+                        <div class="flex items-end gap-2 mb-4">
+                            <span class="text-gray-400 line-through text-sm">R$ 4.200</span>
+                            <span class="text-2xl font-black text-brand-blue">R$ 3.150</span>
+                        </div>
+                        <button class="w-full bg-brand-blue text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                            Pegar Oferta <i class="fas fa-external-link-alt text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Produto 3 -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden group border border-gray-100">
+                    <div class="relative h-48 bg-gray-200 overflow-hidden flex items-center justify-center">
+                         <div class="absolute top-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded">-60%</div>
+                        <i class="fas fa-headphones text-6xl text-gray-400 group-hover:scale-110 transition duration-300"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-400 mb-1 uppercase font-semibold">Áudio</div>
+                        <h3 class="text-lg font-bold text-gray-900 leading-tight mb-2">Fone Bluetooth JBL</h3>
+                        <div class="flex items-end gap-2 mb-4">
+                            <span class="text-gray-400 line-through text-sm">R$ 399</span>
+                            <span class="text-2xl font-black text-brand-blue">R$ 159</span>
+                        </div>
+                        <button class="w-full bg-brand-blue text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                            Pegar Oferta <i class="fas fa-external-link-alt text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Produto 4 -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden group border border-gray-100">
+                    <div class="relative h-48 bg-gray-200 overflow-hidden flex items-center justify-center">
+                         <div class="absolute top-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded">-15%</div>
+                        <i class="fas fa-gamepad text-6xl text-gray-400 group-hover:scale-110 transition duration-300"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-400 mb-1 uppercase font-semibold">Games</div>
+                        <h3 class="text-lg font-bold text-gray-900 leading-tight mb-2">Console PlayStation 5</h3>
+                        <div class="flex items-end gap-2 mb-4">
+                            <span class="text-gray-400 line-through text-sm">R$ 3.999</span>
+                            <span class="text-2xl font-black text-brand-blue">R$ 3.399</span>
+                        </div>
+                        <button class="w-full bg-brand-blue text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                            Pegar Oferta <i class="fas fa-external-link-alt text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="#" class="text-brand-blue font-bold hover:text-brand-orange transition flex items-center justify-center gap-2">
+                    Ver todas as ofertas <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios Section -->
+    <section class="py-16 bg-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Lojas Verificadas</h3>
+                    <p class="text-gray-600">Só postamos promoções de lojas confiáveis e com boa reputação.</p>
+                </div>
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-orange-100 text-brand-orange rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Alertas Rápidos</h3>
+                    <p class="text-gray-600">As promoções acabam rápido. Nossa equipe posta em tempo real.</p>
+                </div>
+                <div class="p-6">
+                    <div class="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">100% Gratuito</h3>
+                    <p class="text-gray-600">Você não paga nada para participar dos grupos e aproveitar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Group Section -->
+    <section id="grupos" class="relative py-20 bg-brand-orange overflow-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E');"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <i class="fab fa-whatsapp text-6xl text-white mb-6 animate-bounce"></i>
+            <h2 class="text-3xl font-black text-white sm:text-4xl mb-4 text-shadow">
+                Não perca mais nenhuma promoção!
+            </h2>
+            <p class="text-xl text-white/90 mb-8 font-medium">
+                Entre agora no nosso grupo VIP no WhatsApp e Telegram. As vagas são limitadas!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full text-green-600 bg-white hover:bg-green-50 transition btn-3d shadow-lg">
+                    <i class="fab fa-whatsapp mr-2 text-2xl"></i> Grupo WhatsApp
+                </a>
+                <a href="#" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-lg font-bold rounded-full text-white hover:bg-white hover:text-brand-orange transition">
+                    <i class="fab fa-telegram-plane mr-2 text-2xl"></i> Canal Telegram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Col 1 -->
+                <div>
+                     <div class="text-2xl font-black text-white italic tracking-tighter mb-4">
+                        <span class="text-brand-orange">Radar</span><span class="text-white">daPromoção</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Sua fonte diária de economia. Rastreamos a internet para encontrar os menores preços para você.
+                    </p>
+                </div>
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-brand-orange transition">Sobre nós</a></li>
+                        <li><a href="#" class="hover:text-brand-orange transition">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-brand-orange transition">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contato</h4>
+                    <p class="text-gray-400 text-sm mb-4">Dúvidas ou sugestões? Fale conosco.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-brand-orange transition text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-brand-orange transition text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white hover:text-brand-orange transition text-xl"><i class="far fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2024 Radar da Promoção. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script simples para Mobile Menu -->
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
